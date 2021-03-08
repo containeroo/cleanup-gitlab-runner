@@ -34,14 +34,14 @@ If you want to use cleanup-gitlab-runner in a GitLab CI / CD job, you can use th
 
 ```yaml
 image:
-  name: containeroo/cleanup_gitlab_runner:latest
+  name: containeroo/cleanup-gitlab-runner:latest
   entrypoint: [""]
 
 stages:
-  - cleanup_gitlab_runner
+  - cleanup-gitlab-runner
 
 cleanup_gitlab_runner:
-  stage: cleanup_gitlab_runner
+  stage: cleanup-gitlab-runner
   only:
     - schedules
   script: python /app/cleanup_gitlab_runner.py
