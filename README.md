@@ -40,7 +40,7 @@ image:
 stages:
   - cleanup-gitlab-runner
 
-cleanup_gitlab_runner:
+cleanup-gitlab-runner:
   stage: cleanup-gitlab-runner
   only:
     - schedules
