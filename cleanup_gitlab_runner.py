@@ -61,7 +61,9 @@ def main():
 
     err = False
     for runner in runners:
-        if runner.status == 'online':
+        status = None if not hasattr(runner, 'status') else runner.status
+        online = None if not hasattr(runner, 'online') else runner.online
+        if status == 'online' or online:
             sys.stdout.write(f"skip runner {runner.description} (id: {runner.id}) because is online\n")
             continue
         try:
