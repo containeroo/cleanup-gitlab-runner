@@ -11,7 +11,7 @@ except Exception:
     sys.stderr.write("requirements are not satisfied! see 'requirements.txt'\n")
     sys.exit(1)
 
-__version__ = "1.0.2"
+__version__ = "1.0.3"
 
 
 def check_env_vars():
@@ -21,6 +21,9 @@ def check_env_vars():
 
     if not gitlab_token:
         raise EnvironmentError("environment variable 'GITLAB_TOKEN' not set!")
+
+    if not gitlab_url:
+        raise EnvironmentError("environment variable 'CI_SERVER_URL' not set!")
 
     Env_vars = namedtuple('Env_vars', ['verify_ssl',
                                        'gitlab_token',
