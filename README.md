@@ -23,7 +23,7 @@ cleanup-gitlab-runner takes the following environment variables:
 | :-------------- | :------------------------------------------ | :--------------------------- |
 | `VERIFY_SSL`    | Verify ssl certificate (defaults to `true`) | `true` or `false`            |
 | `GITLAB_TOKEN`  | GitLab access token (more detail see below) | `12345678`                   |
-| `CI_SERVER_URL` | GitLab URL (defaults to `CI_SERVER_URL`     | `https://gitlab.example.com` |
+| `GITLAB_URL`    | GitLab URL (defaults to `CI_SERVER_URL`     | `https://gitlab.example.com` |
 
 *GITLAB_TOKEN*
 *Create the access token with an admin user*

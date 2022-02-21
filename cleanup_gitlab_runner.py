@@ -11,19 +11,22 @@ except Exception:
     sys.stderr.write("requirements are not satisfied! see 'requirements.txt'\n")
     sys.exit(1)
 
-__version__ = "1.0.4"
+__version__ = "1.1.0"
 
 
 def check_env_vars():
     verify_ssl = os.environ.get("VERIFY_SSL", "false").lower() == "true"
     gitlab_token = os.environ.get("GITLAB_TOKEN")
-    gitlab_url = os.environ.get("CI_SERVER_URL")
 
     if not gitlab_token:
         raise EnvironmentError("environment variable 'GITLAB_TOKEN' not set!")
 
+    gitlab_url = os.environ.get("CI_SERVER_URL")
     if not gitlab_url:
-        raise EnvironmentError("environment variable 'CI_SERVER_URL' not set!")
+        gitlab_url = os.environ.get("GITLAB_URL")
+
+    if not gitlab_url:
+        raise EnvironmentError("environment variable 'GITLAB_URL' not set!")
 
     Env_vars = namedtuple('Env_vars', ['verify_ssl',
                                        'gitlab_token',
