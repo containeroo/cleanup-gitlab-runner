@@ -44,7 +44,6 @@ cleanup-gitlab-runner:
   stage: cleanup-gitlab-runner
   only:
     - schedules
-  script: python /app/cleanup_gitlab_runner.py
 ```
 
 In order to set the configration environment variables, go to your project (repository) -->  `Settings` -> `CI / CD` -> `Variabels` -> `Expand`.
