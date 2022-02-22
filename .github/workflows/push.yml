@@ -1,4 +1,6 @@
 ---
+name: Create images
+
 on:
   release:
     types:
