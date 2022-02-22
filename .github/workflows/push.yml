@@ -4,7 +4,8 @@ name: Create images
 on:
   release:
     types:
-      - published
+      - released
+      - created
 
 jobs:
   multi-arch-build:
