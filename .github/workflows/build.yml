@@ -1,13 +1,11 @@
 ---
 name: Create images
-
 on:
   release:
     types:
       - released
       - published
       - created
-
 jobs:
   multi-arch-build:
     runs-on: ubuntu-latest
