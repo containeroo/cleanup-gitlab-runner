@@ -12,7 +12,7 @@ except Exception:
     sys.stderr.write("requirements are not satisfied! see 'requirements.txt'\n")
     sys.exit(1)
 
-__version__ = "1.1.0"
+__version__ = "1.1.3"
 
 
 def check_env_vars():
