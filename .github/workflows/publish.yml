@@ -1,11 +1,9 @@
----
-name: Create images
+name: Publish container image
+
 on:
   release:
-    types:
-      - released
-      - published
-      - created
+    types: [published]
+
 jobs:
   multi-arch-build:
     runs-on: ubuntu-latest
