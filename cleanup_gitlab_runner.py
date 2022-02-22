@@ -4,6 +4,7 @@ import sys
 from collections import namedtuple
 
 import urllib3
+import validators
 
 try:
     import gitlab
@@ -27,6 +28,9 @@ def check_env_vars():
 
     if not gitlab_url:
         raise EnvironmentError("environment variable 'GITLAB_URL' not set!")
+
+    if not validators.url(gitlab_url):
+        raise EnvironmentError(f"environment variable 'GITLAB_URL' {gitlab_url} is not valid!")
 
     Env_vars = namedtuple('Env_vars', ['verify_ssl',
                                        'gitlab_token',
