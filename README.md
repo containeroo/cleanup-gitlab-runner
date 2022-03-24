@@ -19,11 +19,11 @@ cleanup-gitlab-runner is built to run in a CI environment (e.g. GitLab CI).
 
 cleanup-gitlab-runner takes the following environment variables:
 
-| Variable        | Description                                 | Example                      |
-| :-------------- | :------------------------------------------ | :--------------------------- |
-| `VERIFY_SSL`    | Verify ssl certificate (defaults to `true`) | `true` or `false`            |
-| `GITLAB_TOKEN`  | GitLab access token (more detail see below) | `12345678`                   |
-| `GITLAB_URL`    | GitLab URL (defaults to `CI_SERVER_URL`     | `https://gitlab.example.com` |
+| Variable       | Description                                 | Example                      |
+| :------------- | :------------------------------------------ | :--------------------------- |
+| `VERIFY_SSL`   | Verify ssl certificate (defaults to `true`) | `true` or `false`            |
+| `GITLAB_TOKEN` | GitLab access token (more detail see below) | `12345678`                   |
+| `GITLAB_URL`   | GitLab URL (defaults to `CI_SERVER_URL`     | `https://gitlab.example.com` |
 
 *GITLAB_TOKEN*
 *Create the access token with an admin user*
