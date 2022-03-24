@@ -36,6 +36,12 @@ jobs:
           file: ./Dockerfile
           platforms: linux/amd64
           push: true
+          labels: |
+            org.opencontainers.image.title=cleanup-gitlab-runner
+            org.opencontainers.image.description=cleanup-gitlab-runner
+            org.opencontainers.image.url=https://github.com/containeroo/cleanup-gitlab-runner
+            org.opencontainers.image.source=https://github.com/containeroo/cleanup-gitlab-runner
+            org.opencontainers.image.version=${{ steps.tag.outputs.version }}
           tags: |
             containeroo/cleanup-gitlab-runner:latest
             containeroo/cleanup-gitlab-runner:${{ steps.tag.outputs.version }}
