@@ -70,7 +70,7 @@ stringData:
   GITLAB_TOKEN: <GITLAB_TOKEN>
 ```
 
-create a cronjob to periodically delete unused gitlab runners:
+Create a CronJob to periodically delete unused GitLab runners:
 
 ```yaml
 ---
