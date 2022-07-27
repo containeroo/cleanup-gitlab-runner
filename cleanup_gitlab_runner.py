@@ -35,13 +35,20 @@ def check_env_vars():
     Env_vars = namedtuple('Env_vars', ['verify_ssl',
                                        'gitlab_token',
                                        'gitlab_url',
-                                       ]
+                                       'dry_run',
+                                       'gitlab_group',
+                                       'gitlab_baseauth_user',
+                                       'gitlab_baseauth_password']
     )
 
     return Env_vars(
         verify_ssl=verify_ssl,
         gitlab_token=gitlab_token,
         gitlab_url=gitlab_url,
+        dry_run=os.environ.get("DRY_RUN", None),
+        gitlab_group=os.environ.get("GITLAB_GROUP", None),
+        gitlab_baseauth_user=os.environ.get("GITLAB_BASEAUTH_USER", None),
+        gitlab_baseauth_password=os.environ.get("GITLAB_BASEAUTH_PASSWORD", None),
     )
 
 def main():
@@ -58,13 +65,22 @@ def main():
     try:
         conn = gitlab.Gitlab(url=env_vars.gitlab_url,
                              private_token=env_vars.gitlab_token,
-                             ssl_verify=env_vars.verify_ssl)
+                             ssl_verify=env_vars.verify_ssl,
+                             http_username=env_vars.gitlab_baseauth_user,
+                             http_password=env_vars.gitlab_baseauth_password)
+
     except Exception as e:
         sys.stderr.write(f"unable to connect to gitlab. {str(e)}\n")
         sys.exit(1)
 
+    sys.stdout.write(f"[DRY RUN] running in dry run mode\n")
+
     try:
-        runners = conn.runners.all(all=True)
+        if env_vars.gitlab_group:
+            runners = conn.groups.get(env_vars.gitlab_group).runners.list(all=True)
+        else:
+            runners = conn.runners.all(all=True)
+
     except Exception as e:
         sys.stderr.write(f"unable to get runners. {str(e)}\n")
         sys.exit(1)
@@ -77,8 +93,15 @@ def main():
             sys.stdout.write(f"skip runner {runner.description} (id: {runner.id}) because is online\n")
             continue
         try:
-            runner.delete()
+            if env_vars.dry_run:
+                sys.stdout.write(f"[DRY RUN] delete runner {runner.description} (id: {runner.id})\n")
+                continue
             sys.stdout.write(f"delete runner {runner.description} (id: {runner.id})\n")
+            if env_vars.gitlab_group:
+                conn.runners.get(runner.id).delete()
+                continue
+            runner.delete()
+
         except Exception as e:
             sys.stderr.write(f"cannot delete runner {runner.description} (id: {runner.id}). {str(e)}\n")
             err = True
