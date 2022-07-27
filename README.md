@@ -9,13 +9,13 @@
 ## Introduction
 
 cleanup-gitlab-runner deletes all Gitlab runners with the state `offline`.
-cleanup-gitlab-runner is built to run in a CI environment (e.g. GitLab CI).
+cleanup-gitlab-runner is built to run in a CI environment (e.g. GitLab CI) or as a Kubernetes cronjob.
 
 ## Requirements
 
 - GitLab
 
-## Configration
+## Configuration
 
 cleanup-gitlab-runner takes the following environment variables:
 
@@ -53,3 +53,58 @@ cleanup-gitlab-runner:
 In order to set the configration environment variables, go to your project (repository) -->  `Settings` -> `CI / CD` -> `Variabels` -> `Expand`.
 
 After you have set all variables you can create a pipeline schedule. This ensures your job runs regularly.
+
+### Kubernetes cronjob
+
+create a secret with a gitlab group token for a specific group or a gitlab admin token for all runners:
+
+```yaml
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: cleanup-gitlab-runner
+  namespace: gitlab
+type: Opaque
+stringData:
+  GITLAB_TOKEN: <GITLAB_TOKEN>
+```
+
+create a cronjob to periodically delete unused gitlab runners:
+
+```yaml
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: cleanup-gitlab-runner
+  namespace: gitlab
+  labels:
+    job: cleanup-gitlab-runner
+spec:
+  schedule: CRON_TZ=Europe/Zurich 0 4 * * *
+  concurrencyPolicy: Forbid
+  failedJobsHistoryLimit: 1
+  successfulJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            job: cleanup-gitlab-runner
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: cleanup-gitlab-runner
+              image: ghcr.io/containeroo/cleanup-gitlab-runner:latest
+              env:
+                - name: GITLAB_URL
+                  value: http://gitlab-webservice-default.gitlab.svc.cluster.local:8080
+                #- name: GITLAB_GROUP
+                #  value: MY_GROUP
+              envFrom:
+                - secretRef:
+                    name: cleanup-gitlab-runner
+          automountServiceAccountToken: false
+
+```
