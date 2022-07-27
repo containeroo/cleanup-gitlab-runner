@@ -56,7 +56,7 @@ After you have set all variables you can create a pipeline schedule. This ensure
 
 ### Kubernetes CronJob
 
-create a secret with a gitlab group token for a specific group or a gitlab admin token for all runners:
+Create a secret with a GitLab group token for a specific group or a GitLab admin token for all runners:
 
 ```yaml
 ---
