@@ -54,7 +54,7 @@ In order to set the configration environment variables, go to your project (repo
 
 After you have set all variables you can create a pipeline schedule. This ensures your job runs regularly.
 
-### Kubernetes cronjob
+### Kubernetes CronJob
 
 create a secret with a gitlab group token for a specific group or a gitlab admin token for all runners:
 
