@@ -9,7 +9,7 @@
 ## Introduction
 
 cleanup-gitlab-runner deletes all Gitlab runners with the state `offline`.
-cleanup-gitlab-runner is built to run in a CI environment (e.g. GitLab CI) or as a Kubernetes cronjob.
+cleanup-gitlab-runner is built to run in a CI environment (e.g. GitLab CI) or as a Kubernetes CronJob.
 
 ## Requirements
 
