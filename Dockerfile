@@ -1,4 +1,4 @@
-FROM python:3.10-alpine
+FROM python:3.11-alpine
 
 ADD requirements.txt cleanup_gitlab_runner.py /app/
 
