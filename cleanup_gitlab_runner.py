@@ -13,7 +13,7 @@ except Exception:
         "requirements are not satisfied! see 'requirements.txt'\n")
     sys.exit(1)
 
-__version__ = "1.3.17"
+__version__ = "1.4.0"
 
 
 def check_env_vars():
