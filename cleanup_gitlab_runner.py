@@ -13,7 +13,7 @@ except Exception:
         "requirements are not satisfied! see 'requirements.txt'\n")
     sys.exit(1)
 
-__version__ = "1.1.9"
+__version__ = "1.3.17"
 
 
 def check_env_vars():
@@ -33,6 +33,7 @@ def check_env_vars():
             - verify_ssl (bool): Whether SSL verification is enabled.
             - gitlab_token (str): GitLab API token.
             - gitlab_url (str): GitLab instance URL.
+            - ignore_errors (bool): Do not exit with error code 1 if there is an error
             - dry_run (bool): Whether the operation is a dry run.
             - gitlab_group (str): GitLab group to operate on.
             - gitlab_baseauth_user (str): Basic authentication username.
@@ -55,6 +56,7 @@ def check_env_vars():
             f"environment variable 'GITLAB_URL' {gitlab_url} is not valid!")
 
     verify_ssl = os.environ.get("VERIFY_SSL", "false").lower() == "true"
+    ignore_errors = os.environ.get("IGNORE_ERRORS", "false").lower() == "true"
     dry_run = os.environ.get("DRY_RUN", "false").lower() == "true"
 
     gitlab_group = os.environ.get("GITLAB_GROUP")
@@ -64,6 +66,7 @@ def check_env_vars():
     Env_vars = namedtuple('Env_vars', ['verify_ssl',
                                        'gitlab_token',
                                        'gitlab_url',
+                                       'ignore_errors',
                                        'dry_run',
                                        'gitlab_group',
                                        'gitlab_baseauth_user',
@@ -74,6 +77,7 @@ def check_env_vars():
         verify_ssl=verify_ssl,
         gitlab_token=gitlab_token,
         gitlab_url=gitlab_url,
+        ignore_errors=ignore_errors,
         dry_run=dry_run,
         gitlab_group=gitlab_group,
         gitlab_baseauth_user=gitlab_baseauth_user,
@@ -144,7 +148,7 @@ def main():
                 f"cannot delete runner {runner.description} (id: {runner.id}). {str(e)}\n")
             err = True
 
-    sys.exit(1 if err else 0)
+    sys.exit(1 if (err and env_vars.ignore_errors) else 0)
 
 
 if __name__ == "__main__":
