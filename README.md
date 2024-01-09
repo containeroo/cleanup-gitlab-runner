@@ -22,6 +22,7 @@ cleanup-gitlab-runner takes the following environment variables:
 | Variable                   | Description                                                                         | Example                      |
 | :------------------------- | :---------------------------------------------------------------------------------- | :--------------------------- |
 | `VERIFY_SSL`               | Verify ssl certificate (defaults to `true`)                                         | `true` or `false`            |
+| `IGNORE_ERRORS`            | optional, do not exit with error code 1 if there is an error                        | `true` or `false`            |
 | `DRY_RUN`                  | optional, if set it will only print but not delete                                  | `true` or `false`            |
 | `GITLAB_URL`               | GitLab URL (defaults to `CI_SERVER_URL`                                             | `https://gitlab.example.com` |
 | `GITLAB_TOKEN`             | GitLab access token (more detail see below)                                         | `12345678`                   |
@@ -29,8 +30,8 @@ cleanup-gitlab-runner takes the following environment variables:
 | `GITLAB_BASEAUTH_USER`     | optional, user for additional basic authentication                                  | `my_user`                    |
 | `GITLAB_BASEAUTH_PASSWORD` | optional, password for additional basic authentication                              | `my_password`                |
 
-*GITLAB_TOKEN*
-*Create the access token with an admin user*
+_GITLAB_TOKEN_
+_Create the access token with an admin user_
 
 ### GitLab
 
@@ -50,7 +51,7 @@ cleanup-gitlab-runner:
     - schedules
 ```
 
-In order to set the configration environment variables, go to your project (repository) -->  `Settings` -> `CI / CD` -> `Variabels` -> `Expand`.
+In order to set the configration environment variables, go to your project (repository) --> `Settings` -> `CI / CD` -> `Variabels` -> `Expand`.
 
 After you have set all variables you can create a pipeline schedule. This ensures your job runs regularly.
 
@@ -106,5 +107,4 @@ spec:
                 - secretRef:
                     name: cleanup-gitlab-runner
           automountServiceAccountToken: false
-
 ```
