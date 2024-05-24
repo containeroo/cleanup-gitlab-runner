@@ -1,2 +1,2 @@
 python-gitlab==4.5.0
-validators==0.28.1
+validators==0.28.2
